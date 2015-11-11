@@ -1,0 +1,27 @@
+{
+  "name": "ReadToMe",
+  "version": "0.0.1",
+  "description": "Anything to audio web app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HopefulLlama/ReadToMe.git"
+  },
+  "keywords": [
+    "audio"
+  ],
+  "author": "HopefulLlama",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/HopefulLlama/ReadToMe/issues"
+  },
+  "homepage": "http://read-to-me.herokuapp.com/",
+  "dependencies": {
+    "bower": "^1.4.1",
+    "express": "^4.12.3"
+  }
+}

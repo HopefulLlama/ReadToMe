@@ -1,0 +1,29 @@
+{
+  "name": "ReadToMe",
+  "version": "0.0.1",
+  "homepage": "https://github.com/HopefulLlama/ReadToMe",
+  "authors": [
+    "HopefulLlama <jonlaw10170@gmail.com>"
+  ],
+  "description": "Anything to audio web app",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "audio"
+  ],
+  "license": "GNU",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7",
+    "ocrad.js": "antimatter15/ocrad.js",
+    "speak.js": "kripken/speak.js"
+  }
+}
