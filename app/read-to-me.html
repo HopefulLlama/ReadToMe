@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="./lib/jquery/dist/jquery.min.js"></script>
 	<script type="text/javascript" src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="./lib/ocrad.js/ocrad.js"></script>
 
 	<script type="text/javascript" src="./src/js/responsiveVoice.js"></script>
 
@@ -24,6 +25,7 @@
 		<div class="btn-group" role="group">
 			<button type="button" class="btn btn-lg btn-primary" ng-click="toggleSpeak();">ReadToMe</button> 
 		</div>
+		<input id="fileUpload" type="file" name="pic" accept="image/*" ng-model="fileUpload"/><button type="button" class="btn btn-primary" ng-click="processFile();">Process File</button> 
 		<textarea class="col-xs-12 form-control" ng-model="script"></textarea>
 	</div>
 </body>

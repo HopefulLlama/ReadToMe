@@ -23,7 +23,6 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "angular": "~1.4.7",
-    "ocrad.js": "antimatter15/ocrad.js",
-    "speak.js": "kripken/speak.js"
+    "ocrad.js": "antimatter15/ocrad.js"
   }
 }
