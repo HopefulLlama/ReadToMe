@@ -3,13 +3,12 @@
 <head>
 	<title>ReadToMe</title>
 	<meta charset="utf-8">
-
-	<link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap-theme.min.css">
-	
-	<script type="text/javascript" src="./lib/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./lib/angular/angular.min.js"></script>
+	<script type="text/javascript" src="./lib/angular-animate/angular-animate.min.js"></script>
+	<script type="text/javascript" src="./lib/angular-aria/angular-aria.min.js"></script>
+	
+	<script type="text/javascript" src="./lib/angular-material/angular-material.min.js"></script>
+
 	<script type="text/javascript" src="./lib/ocrad.js/ocrad.js"></script>
 
 	<script type="text/javascript" src="./src/js/responsiveVoice.js"></script>
@@ -18,15 +17,34 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+	<link rel='stylesheet' href='./lib/angular-material/angular-material.min.css'>
     <link rel='icon' type='image/png' href='./src/assets/favicon.crush.png'>
 </head>
-<body ng-app="ReadToMeApp">
-	<div class="container" ng-controller="ReadToMeController">
-		<div class="btn-group" role="group">
-			<button type="button" class="btn btn-lg btn-primary" ng-click="toggleSpeak();">ReadToMe</button> 
-		</div>
-		<input id="fileUpload" type="file" name="pic" accept="image/*" ng-model="fileUpload"/><button type="button" class="btn btn-primary" ng-click="processFile();">Process File</button> 
-		<textarea class="col-xs-12 form-control" ng-model="script"></textarea>
+<body ng-app="ReadToMeApp" layout="column">
+	<div ng-controller="ReadToMeController">
+		<md-content>
+			<md-toolbar layout="row" class="md-warn">
+				<div class="md-toolbar-tools">
+					<h1>ReadToMe</h1>
+				</div>
+			</md-toolbar>
+			<div flex layout="row">
+	    		<section layout="row" layout-align="center center" layout-wrap>
+	    		 	<md-button class="md-raised md-warn" ng-click="toggleSpeak();">
+	    		 		<span ng-if="!speak">ReadToMe</span>
+	    		 		<span ng-if="speak">Pause</span>
+	    		 	</md-button>
+
+      				<md-button>
+        				<label for="file-upload">Select File</label>  
+      				</md-button>
+					<input id="file-upload" type="file" name="pic" accept="image/*" ng-model="fileUpload"/>
+
+					<md-button class="md-primary" ng-click="processFile('file-upload');">Process File</md-button>
+					<textarea class="col-xs-12 form-control" ng-model="script"></textarea>
+				</section>
+			</div>
+		</md-content>
 	</div>
 </body>
 </html>
