@@ -1,12 +1,15 @@
 var readToMeApp = angular.module('ReadToMeApp', ['ngMaterial']);
 
-readToMeApp.controller('ReadToMeController', ['$scope', function($scope) {
+readToMeApp.controller('ReadToMeController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
 	$scope.speak = false;
 	$scope.sentenceIndex = 0;
+
+	$scope.script = new Script();
+
 	$scope.toggleSpeak = function() {
-		if(typeof $scope.script !== 'undefined' && $scope.script !== null) {
+		if($scope.script.hasContents()) {
 			$scope.speak = !$scope.speak;
-			$scope.parsedScript = $scope.script.trim().split(".");
+			$scope.parsedScript = $scope.script.contents.trim().split(".");
 			if($scope.parsedScript[$scope.parsedScript.length-1] === "") {
 				$scope.parsedScript.splice($scope.parsedScript.length-1, 1);
 			}	
@@ -31,6 +34,29 @@ readToMeApp.controller('ReadToMeController', ['$scope', function($scope) {
 		}
 	};
 
+	$scope.showImportDialog = function(event) {
+		$mdDialog.show({
+			controller: DialogController,
+			templateUrl: 'src/js/dialogs/import.tmpl.html',
+			parent: angular.element(document.body),
+			targetEvent: event,
+			clickOutsideToClose: true,
+			fullscreen: true	
+		})
+		.then(function(text) {
+			$scope.script.contents = text;
+		});
+	};
+}]);
+
+function DialogController($scope, $mdDialog) {
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+	$scope.cancel = function() {
+		$mdDialog.cancel();
+	};	
+
 	$scope.processFile = function(domId) {
 		var canvas = document.createElement("canvas");
 		var context = canvas.getContext('2d');
@@ -40,9 +66,13 @@ readToMeApp.controller('ReadToMeController', ['$scope', function($scope) {
 			canvas.width = this.width
 			canvas.height = this.height;
 			context.drawImage(image,0,0);
-			$scope.script = OCRAD(context.getImageData(0,0,canvas.width,canvas.height));
+			var contents = OCRAD(context.getImageData(0,0,canvas.width,canvas.height));
+			$mdDialog.hide(contents);
 			$scope.$digest();
 		}
 		image.src = URL.createObjectURL(f);
-	}
-}]);
+	};
+	$scope.answer = function(answer) {
+		$mdDialog.hide(answer);
+	};
+}

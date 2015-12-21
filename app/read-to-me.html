@@ -13,6 +13,7 @@
 
 	<script type="text/javascript" src="./src/js/responsiveVoice.js"></script>
 
+	<script type="text/javascript" src="./src/js/script.js"></script>
 	<script type="text/javascript" src="./src/js/read-to-me.js"></script>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -28,20 +29,24 @@
 					<h1>ReadToMe</h1>
 				</div>
 			</md-toolbar>
-			<div flex layout="row">
-	    		<section layout="row" layout-align="center center" layout-wrap>
-	    		 	<md-button class="md-raised md-warn" ng-click="toggleSpeak();">
+			<div layout="column" flex="100">
+	    		<section layout="row">
+	    		 	<md-button flex="33" class="md-raised md-warn" ng-click="toggleSpeak();">
 	    		 		<span ng-if="!speak">ReadToMe</span>
 	    		 		<span ng-if="speak">Pause</span>
 	    		 	</md-button>
+	    		</section>
 
-      				<md-button>
-        				<label for="file-upload">Select File</label>  
-      				</md-button>
-					<input id="file-upload" type="file" name="pic" accept="image/*" ng-model="fileUpload"/>
+	    		<section layout="row">
+	    			<md-button class="md-raised" ng-click="showImportDialog($event)">Import from...</md-button>
+					<md-button class="md-raised" ng-click="script.clear();">Clear Script</md-button>
+				</section>
 
-					<md-button class="md-primary" ng-click="processFile('file-upload');">Process File</md-button>
-					<textarea class="col-xs-12 form-control" ng-model="script"></textarea>
+				<section layout="row" layout-padding>
+			        <md-input-container flex="100">
+						<label>Script</label>
+						<textarea ng-model="script.contents" md-maxlength="10000"></textarea>
+					</md-input-container>
 				</section>
 			</div>
 		</md-content>
