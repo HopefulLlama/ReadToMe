@@ -1,24 +1,36 @@
 <md-dialog ng-cloak>
-  <form>
-    <md-toolbar class="md-warn">
-      <div class="md-toolbar-tools">
-        <h2>Import Options</h2>
-        <span flex></span>
-      </div>
-    </md-toolbar>
-    <md-dialog-content>
-      <div class="md-dialog-content">
-          <input id="file-upload" class="md-button" type="file" name="pic" accept="image/*" ng-model="fileUpload"/>
-      </div>
-    </md-dialog-content>
-    <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button class="md-raised" ng-click="processFile('file-upload')">
-        Process File
-      </md-button>
-      <md-button ng-click="cancel()">
-        Cancel
-      </md-button>
-    </md-dialog-actions>
-  </form>
+	<form>
+		<md-toolbar class="md-warn">
+		<div class="md-toolbar-tools">
+			<h2>Import Options</h2>
+			<span flex></span>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<md-tabs md-dynamic-height>
+				<md-tab label="File" ng-click="tabChange['file']()">
+					<p>Import text from a local file. Accepted file types are:</p>
+					<ul>
+						<li>Images (OCR to extract text)
+					</ul>
+					<input id="file-upload" class="md-button" type="file" name="pic" accept="image/*" ng-model="fileUpload"/>
+				</md-tab>
+				<md-tab label="Camera" ng-click="tabChange['camera']()">
+					<p>Use your camera to take an image of text. ReadToMe will then attempt to use OCR to extract text from the image.</p>
+					<video id="camera-playback" autoplay style="width: 100%"></video>
+				</md-tab>
+			</md-tabs>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
+		<span flex></span>
+			<md-button class="md-raised" ng-click="process[importType]()">
+				Process
+			</md-button>
+			<md-button ng-click="cancel()">
+				Cancel
+			</md-button>
+		</md-dialog-actions>
+	</form>
 </md-dialog>

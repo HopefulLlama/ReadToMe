@@ -41,7 +41,7 @@ readToMeApp.controller('ReadToMeController', ['$scope', '$mdDialog', function($s
 			parent: angular.element(document.body),
 			targetEvent: event,
 			clickOutsideToClose: true,
-			fullscreen: true	
+			fullscreen: false	
 		})
 		.then(function(text) {
 			$scope.script.contents = text;
@@ -50,6 +50,25 @@ readToMeApp.controller('ReadToMeController', ['$scope', '$mdDialog', function($s
 }]);
 
 function DialogController($scope, $mdDialog) {
+	$scope.importType = 'file';
+
+	$scope.tabChange = {
+		file: function() {
+			$scope.importType = 'file';
+		},
+		camera: function() {
+			$scope.importType = 'camera';
+			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+			if(navigator.getUserMedia) {
+				navigator.getUserMedia({audio: false, video: true}, function(stream) {
+					document.getElementById("camera-playback").src = window.URL.createObjectURL(stream);
+				}, function() {
+					console.log("No camera or denied permission.");
+				});
+			}
+		}
+	};
+
 	$scope.hide = function() {
 		$mdDialog.hide();
 	};
@@ -57,21 +76,36 @@ function DialogController($scope, $mdDialog) {
 		$mdDialog.cancel();
 	};	
 
-	$scope.processFile = function(domId) {
-		var canvas = document.createElement("canvas");
-		var context = canvas.getContext('2d');
-		var f = document.getElementById(domId).files[0];
-		var image = new Image;
-		image.onload = function() {
-			canvas.width = this.width
-			canvas.height = this.height;
-			context.drawImage(image,0,0);
+	$scope.process = {
+		file: function() {
+			var canvas = document.createElement("canvas");
+			var context = canvas.getContext('2d');
+			var f = document.getElementById('file-upload').files[0];
+			var image = new Image;
+			image.onload = function() {
+				canvas.width = this.width
+				canvas.height = this.height;
+				context.drawImage(image,0,0);
+				var contents = OCRAD(context.getImageData(0,0,canvas.width,canvas.height));
+				$mdDialog.hide(contents);
+				$scope.$digest();
+			}
+			if(f) {
+				image.src = URL.createObjectURL(f);
+			}
+		},
+		camera: function() {
+			var video = document.getElementById("camera-playback");
+		    var canvas = document.createElement("canvas");
+		    var context = canvas.getContext('2d');
+			canvas.width = video.clientWidth
+			canvas.height = video.clientHeight;
+			context.drawImage(video,0,0);
 			var contents = OCRAD(context.getImageData(0,0,canvas.width,canvas.height));
 			$mdDialog.hide(contents);
-			$scope.$digest();
 		}
-		image.src = URL.createObjectURL(f);
 	};
+
 	$scope.answer = function(answer) {
 		$mdDialog.hide(answer);
 	};
